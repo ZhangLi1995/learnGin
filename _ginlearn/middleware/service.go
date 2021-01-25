@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"learnGin/ginlearn/middleware/middleware"
+	"learnGin/_ginlearn/middleware/middleware"
 	"net/http"
 
 	"github.com/gin-gonic/gin"

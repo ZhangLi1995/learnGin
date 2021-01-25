@@ -2,7 +2,7 @@ package dal
 
 import (
 	"database/sql"
-	"learnGin/ginlearn/dal/model"
+	"learnGin/_ginlearn/dal/model"
 	"log"
 
 	_ "github.com/go-sql-driver/mysql"

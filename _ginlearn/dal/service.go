@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"learnGin/ginlearn/dal/dal"
-	"learnGin/ginlearn/dal/model"
+	"learnGin/_ginlearn/dal/dal"
+	"learnGin/_ginlearn/dal/model"
 	"log"
 	"net/http"
 	"strconv"

@@ -1,7 +1,7 @@
 package main
 
 import (
-	"learnGin/ginlearn/middleware/middleware"
+	"learnGin/_ginlearn/middleware/middleware"
 
 	"github.com/gin-gonic/gin"
 )
