@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"learnGin/constants"
 	"learnGin/dal"
 	"learnGin/models"
 	"learnGin/utils"
@@ -12,16 +13,24 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+/**
+ * @Description: 获取注册页
+ * @param c
+ */
 func RegisterPage(c *gin.Context) {
 	c.HTML(http.StatusOK, "register.html", gin.H{"title": "注册页"})
 }
 
+/**
+ * @Description: 注册用户信息
+ * @param c
+ */
 func RegisterUser(c *gin.Context) {
 	/* 获取表单信息 */
-	userName := c.PostForm("user_name")
+	userName := c.PostForm("username")
 	password := c.PostForm("password")
 	rePassword := c.PostForm("repassword")
-	logrus.Infof("user name: %v, password: %v, re password: %v", userName, password, rePassword)
+	logrus.Infof("[RegisterUser] username: %v, password: %v, re password: %v", userName, password, rePassword)
 
 	/* 参数校验 */
 	if utils.StrIsBlank(userName) || utils.StrIsBlank(password) || utils.StrIsBlank(rePassword) {
@@ -36,7 +45,7 @@ func RegisterUser(c *gin.Context) {
 	/* 判断该用户名是否已经注册 */
 	id, err := dal.QueryUserWithName(userName)
 	if err != nil {
-		c.JSON(http.StatusOK, gin.H{"code": 0, "message": err.Error()})
+		c.JSON(http.StatusOK, gin.H{"code": utils.ConvertBizErr(err).ErrCode(), "message": utils.ConvertBizErr(err).ErrMsg()})
 		return
 	}
 	logrus.Infof("[RegisterUser] query result by name(%v) is id = %v", userName, id)
@@ -49,8 +58,8 @@ func RegisterUser(c *gin.Context) {
 	user := &models.User{0, userName, password, 0, time.Now().Unix()}
 	_, err = dal.InsertUser(user)
 	if err != nil {
-		c.JSON(http.StatusOK, gin.H{"code": 0, "message": "注册失败"})
+		c.JSON(http.StatusOK, gin.H{"code": utils.ConvertBizErr(err).ErrCode(), "message": utils.ConvertBizErr(err).ErrMsg()})
 	} else {
-		c.JSON(http.StatusOK, gin.H{"code": 1, "message": "注册成功"})
+		c.JSON(http.StatusOK, gin.H{"code": constants.SuccessCode, "message": "注册成功"})
 	}
 }
